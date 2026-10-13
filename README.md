@@ -106,7 +106,7 @@ orden$1. En “repeticiones” cambia el valor de la subdivisión, y en “pitch
 sola variación tramos de audio más extensos.
 
 
-# #Subpatches por pista
+## Subpatches por pista
 
 ### Pd bangN
 Recibe un bang desde selector_pasos para poner en marcha la carga del archivo wav.
