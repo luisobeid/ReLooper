@@ -2,11 +2,15 @@
 Proyecto: ReLooper : sampler/looper/sequencer
 
 [Link al video de presentación:](https://drive.google.com/file/d/1t9QU4xkxeqvmIcVS6_HWj957HrwJK3w3)
+
 [Link al código](https://drive.google.com/drive/folders/1cKuk-sbbddEl7YKP4t0HP-5ucop5rYKe)
+
 [Link a la carpeta del patch completo con ejemplos y samples](https://drive.google.com/drive/folders/1VL5NR4QDwOPUFznvQELv-rhdbrRSvd8P)
 
 - [Presentacion (YouTube)](https://youtu.be/2I8aFGHPuAw)
+  
 - [Ejemplo 1 - Sgt Pepper RMX (YouTube)](https://youtu.be/laUeQBn42l4)
+  
 - [Ejemplo 2 - 2 segundos (YouTube)](https://youtu.be/0zD6zCd_ow8)
 
 
