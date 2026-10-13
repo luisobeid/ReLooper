@@ -1,5 +1,5 @@
 
-# Proyecto: ReLooper : sampler/looper/sequencer
+# ReLooper => Pure Data sampler/looper/sequencer
 
 [Link al video de presentación:](https://drive.google.com/file/d/1t9QU4xkxeqvmIcVS6_HWj957HrwJK3w3)
 
