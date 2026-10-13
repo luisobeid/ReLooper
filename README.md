@@ -1,5 +1,5 @@
 
-#Proyecto: ReLooper : sampler/looper/sequencer
+# Proyecto: ReLooper : sampler/looper/sequencer
 
 [Link al video de presentación:](https://drive.google.com/file/d/1t9QU4xkxeqvmIcVS6_HWj957HrwJK3w3)
 
@@ -14,7 +14,7 @@
 - [Ejemplo 2 - 2 segundos (YouTube)](https://youtu.be/0zD6zCd_ow8)
 
 
-##Introducción:
+## Introducción:
 
 ReLooper es un patch desarrollado en Pure Data que implementa un looper que trabaja con
 samples de audio y permite secuenciar parámetros con el objetivo performático de manipular y
@@ -34,7 +34,7 @@ pitch, el silencio, la duración, el sentido de la reproducción, y el orden int
 No posee otros efectos de audio, excepto filtros, trémolo y paneo, con el fin de mejorar la
 espacialidad y facilitar coexistencia de las distintas pistas en la mezcla final.
 
-##Arquitectura
+## Arquitectura
 
 ReLooper presenta un diseño modular: un patch principal (Reloop.pd) instancia varios subpatches
 y cuatro pistas/canales idénticos en su forma, conformados por múltiples abstracciones
@@ -70,7 +70,7 @@ controlOrden, que vuelve al orden de reproducción normal del audio. Ver figuras
 A la derecha de la pantalla se encuentran tres subpatches comunes: transporte, master y
 selector_pasos.
 
-##Flujo de la señal de audio
+## Flujo de la señal de audio
 
 El recorrido de la señal de cada pista empieza con la carga del archivo mediante soundfiler en
 controlPlay, el motor de reproducción. La señal pasa luego por pitchNuevo, que realiza la
@@ -78,7 +78,7 @@ transposición; por controlVol, que aplica el volumen por paso, el trémolo y el
 masterFiltro, con una instancia por pista. Finalmente, Master suma las cuatro pistas y envía el
 resultado a dac~ y al grabador (REC). 
 
-##Subpatches globales
+## Subpatches globales
 
 ###Pd Transporte
 Control de transporte global, carga de archivos, play/stop, grabación, y reset global (I/O) de las grillas de
@@ -89,12 +89,12 @@ grabación 2, etc.) y se va a imprimir en consola. Al terminar una sesión se de
 almacenar los audios grabados para que no sean reescritos en la siguiente sesión. 
 
 
-###Pd Master
+### Pd Master
 Suma de las cuatro pistas y control de volumen general, filtro con control de frecuencia de corte y selector
 de tipo de filtrado LP/HP por track, y salida a dac~ y al grabador. El seteo por defecto es lpf y frecuencia de
 corte en 15000 Hz. 
 
-###Pd selector_pasos
+### Pd selector_pasos
 Selector de pasos y subdivisiones por track. Selector compartido que define la cantidad de pasos
 por pista y las envía por send pasos1, 2, 3 y 4 hacia los subpatches bang1, 2, 3 y 4. El número de
 pasos por defecto para todos los tracks es dieciséis y se muestra en el número al final de cada
@@ -106,16 +106,16 @@ orden$1. En “repeticiones” cambia el valor de la subdivisión, y en “pitch
 sola variación tramos de audio más extensos.
 
 
-##Subpatches por pista
+# #Subpatches por pista
 
-###Pd bangN
+### Pd bangN
 Recibe un bang desde selector_pasos para poner en marcha la carga del archivo wav.
 
-###Pd playTrack
+### Pd playTrack
 Recibe el play/stop global pero también actúa de forma local para poner en marcha o detener la
 pista a voluntad. Se encuentra dentro de controlPlay.pd.
 
-###Pd envolvente
+### Pd envolvente
 Se activa por pasos. Su principal objetivo es evitar los clics que se escuchan debido al corte y
 reordenamiento de cada tramo de audio. Recibe desde controlVol los valores de las variables
 atk$1 y rel$1 dados por sendos sliders para controlar el ataque y el release de la envolvente. Se
@@ -123,13 +123,13 @@ encuentra dentro de controlPlay.pd y se dispara con cada paso del metro principa
 En la práctica se permiten valores de hasta 200 ms para el ataque porque generan efectos más
 audibles, como, por ejemplo, imprimir carácter rítmico a un tono continuo tipo drone.
 
-###Pd infoConsola
+### Pd infoConsola
 Imprime en consola la información de cada archivo propia de cada track al momento de cargar los
 audios. Recibe iniciar.
 
-##Abstracciones
+## Abstracciones
 
-###controlPlay.pd – Motor de audio
+### controlPlay.pd – Motor de audio
 Es el módulo mas importante y el de mayor complejidad interna. Recibe por su inlet el mensaje de
 lectura y, mediante soundfiler, carga el archivo de audio en la tabla Track$1. Con el número total
 de muestras que devuelve soundfiler calcula la duración del archivo en milisegundos
@@ -170,28 +170,28 @@ Obs.: las conversiones de muestras a milisegundos usan una frecuencia de muestre
 44100 Hz, por lo que los archivos deben estar a esa frecuencia para que las duraciones
 calculadas coincidan con las reales.
 
-###controlGate.pd – Gate por pasos
+### controlGate.pd – Gate por pasos
 Grilla de 16 pasos que habilita o silencia cada paso de la secuencia de la pista N, con resaltado
 visual sincronizado al índice de reproducción. Sus 16 toggles arman el valor de gate$1, que se
 usa en controlVol para silenciar pasos puntuales sin tocar el resto de los parámetros. Está
 conectada a los controles I/O de controlPlay y transporte. 
 
-###controlOrden.pd – Orden de reproducción
+### controlOrden.pd – Orden de reproducción
 Selector de reproducción por paso. Cuenta con un botón para activar un modo de reproducción en
 reverse (envía reverse$1 a controlPlay) y un array de 16 x 16, cuyo eje vertical muestra el tramo
 de audio que está siendo reproducido, de 1 a 16.
 
-###controlRepeat.pd – Repeticiones
+### controlRepeat.pd – Repeticiones
 Selector de repetición por paso; Presenta un botón para activar el efecto, un array de 16 x 7 y un
 selector de modos de reproducción. El eje vertical representa en cuántas partes está subdividido
 el tramo de audio, con siete opciones: potencias de 2, de 1 a 64.
 
-###controlPitch.pd – Transposición de tono
+### controlPitch.pd – Transposición de tono
 Transpone el pitch por pasos sin modificar su velocidad y alimenta la abstracción pitchNuevo. Ver .
 El eje vertical representa la variación de pitch, con un rango de 0.5 a 4 (de 1/2 * f a 4 * f): tres
 octavas, una hacia abajo y dos hacia arriba.
 
-###controlVol.pd – Control de volumen y paneo
+### controlVol.pd – Control de volumen y paneo
 Control de volumen por paso, es un array de dieciséis pasos con un rango de 0 a 1 en el eje
 vertical. Además, cuenta con funciones que modulan la amplitud y el paneo de manera más
 general: un trémolo, que se activa desde el mismo botón de apagado de efectos presente en los
